@@ -12,14 +12,27 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
 import HomeView from './views/HomeView.vue'
+import { reportVisit } from './utils/tracker.js'
 
 const route = useRoute()
 const isHome = computed(() => route.path === '/')
+
+const HIDDEN_PAGES = ['/login', '/stats']
+watch(
+  () => route.fullPath,
+  () => {
+    const url = window.location.pathname + window.location.search
+    if (!HIDDEN_PAGES.some((h) => url === h || url.startsWith(h + '?'))) {
+      reportVisit(url)
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <style>

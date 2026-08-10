@@ -45,6 +45,21 @@ const routes = [
     name: 'achievement-video',
     component: () => import('../views/DocPage.vue'),
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/LoginView.vue'),
+  },
+  {
+    path: '/stats',
+    name: 'stats',
+    component: () => import('../views/StatsView.vue'),
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: () => import('../views/NotFoundView.vue'),
+  },
 ]
 
 const router = createRouter({
